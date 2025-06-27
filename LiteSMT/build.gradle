@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+}
+
+group 'xyz.distemi'
+version '1.0-SNAPSHOT'
+
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "PaperMC"
+        url = "https://repo.papermc.io/repository/maven-public/"
+    }
+    maven {
+        name = "PlaceholderAPI"
+        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+    }
+}
+
+dependencies {
+    compileOnly 'io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT'
+    implementation 'org.xerial:sqlite-jdbc:3.49.1.0'
+    // Добавьте эти строки для Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    compileOnly 'com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT' // PaperMC
+    compileOnly 'me.clip:placeholderapi:2.11.1' // API плагина PlaceholderAPI
+    compileOnly 'org.projectlombok:lombok:1.18.24' // Lombok API
+    annotationProcessor 'org.projectlombok:lombok:1.18.24' // Lombok процессор
+
+}
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.papermc.io/repository/maven-public/' }  // Для PaperAPI
+    maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }  // Для PlaceholderAPI
+}
+dependencies {
+    compileOnly files('libs/PlaceholderAPI-2.11.6.jar')  // Локальный файл
+}
+dependencies {
+    compileOnly 'me.clip:placeholderapi:2.11.6'  // Проверьте актуальную версию!
+}
+// Регистрируем задачу правильно (без подчёркивания в имени)
+task copyToDevEnv(type: Copy) {
+    from "build/libs/LiteSMT-${version}.jar"  // Динамическое имя файла
+    into "C:/Users/Admin/Desktop/paper-server/plugins"
+
+    // Переименовываем файл (опционально)
+    rename { String fileName ->
+        "LiteSMT-1.0.jar"  // Фиксированное имя для сервера
+    }
+
+}
+
+// Запускаем задачу после успешной сборки
+build.finalizedBy copyToDevEnv

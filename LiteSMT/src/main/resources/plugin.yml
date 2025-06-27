@@ -1,0 +1,7 @@
+name: MainPlugin
+main: MainPlugin.MainPlugin
+version: 1.0
+author: Distemi
+prefix: LSMT
+depend:
+  - PlaceholderAPI
